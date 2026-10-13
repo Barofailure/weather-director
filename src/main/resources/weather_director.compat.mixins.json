@@ -1,0 +1,25 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.barofailure.weatherdirector.mixin.compat",
+  "plugin": "com.barofailure.weatherdirector.mixin.compat.CompatMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "BetterCloudsCloudinessMixin",
+    "BetterCloudsTintMixin",
+    "BetterCloudsPathMixin",
+    "ParticleRainWindMixin",
+    "ParticleRainDensityMixin",
+    "BetterCloudsShapeMixin",
+    "ParticleRainSpawnMixin",
+    "ParticleRainRangeMixin",
+    "ParticleRainNearMixin",
+    "ParticleRainOrientMixin",
+    "DistantHorizonsFogMixin",
+    "ParticleRainGroundFogMixin",
+    "ParticleRainFogTintMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

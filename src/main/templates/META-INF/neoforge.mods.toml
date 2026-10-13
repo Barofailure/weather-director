@@ -1,0 +1,71 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+issueTrackerURL="https://github.com/Din0can/weather-director/issues"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+displayURL="https://github.com/Din0can/weather-director"
+logoFile="weather_director.png"
+authors="D1no_0 (Barofailure)"
+credits="Made for the Barofailure server. Clouds by Better Clouds, rain and ground fog by Particle Rain, far fog by Distant Horizons, seasons by Ecliptic Seasons."
+# Players without the mod can still join: they see plain vanilla weather at the right strength.
+displayTest="IGNORE_ALL_VERSION"
+description='''
+One weather for the whole world, chosen by the season and built up slowly: clear, fair, cloudy, overcast, mist, fog, drizzle, rain, heavy rain and thunderstorms.
+It directs the weather and lets Better Clouds, Particle Rain, Distant Horizons and Ecliptic Seasons play it out when they are installed. All of them are optional.
+'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[mixins]]
+config="${mod_id}.compat.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="betterclouds"
+    type="optional"
+    reason="Weather-driven cloud cover, colour and drift"
+    versionRange="[${betterclouds_min},)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.${mod_id}]]
+    modId="particlerain"
+    type="optional"
+    reason="Wind-blown rain, drizzle density and ground fog"
+    versionRange="[${particlerain_min},)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.${mod_id}]]
+    modId="distanthorizons"
+    type="optional"
+    reason="Weather fog on far terrain"
+    versionRange="[${distanthorizons_min},)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.${mod_id}]]
+    modId="eclipticseasons"
+    type="optional"
+    reason="Seasons decide the weather"
+    versionRange="[${eclipticseasons_min},)"
+    ordering="NONE"
+    side="SERVER"
