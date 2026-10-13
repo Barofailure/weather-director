@@ -1,13 +1,13 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
-issueTrackerURL="https://github.com/Din0can/weather-director/issues"
+issueTrackerURL="https://github.com/Barofailure/weather-director/issues"
 
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
-displayURL="https://github.com/Din0can/weather-director"
+displayURL="https://github.com/Barofailure/weather-director"
 logoFile="weather_director.png"
 authors="D1no_0 (Barofailure)"
 credits="Made for the Barofailure server. Clouds by Better Clouds, rain and ground fog by Particle Rain, far fog by Distant Horizons, seasons by Ecliptic Seasons."

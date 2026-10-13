@@ -3,7 +3,7 @@
 One weather for the whole world, chosen by the season and built up slowly, like real weather.
 Weather Director decides what the sky does. Better Clouds, Particle Rain and Distant Horizons play it out when they are installed.
 
-NeoForge 1.21.1. Made for the [Barofailure](https://barofailure.com) server. [Discord](https://discord.gg/VG4GrBXkmW)
+NeoForge 1.21.1. Made for the [Barofailure](https://barofailure.com) server. [Discord](https://discord.gg/29mfTen8f5)
 
 ## Weathers
 
