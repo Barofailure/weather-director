@@ -124,13 +124,14 @@ public final class GroundFog {
         return 1f + (FOG_SIZE - 1f) * fogShare();
     }
 
-    /** White in mist, grey in fog, darker at night. */
+    /** White in mist, grey in fog; the world lighting dims them at night (see SkyLook.particleColor). */
     public static void tint(SingleQuadParticle p) {
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null) return;
         float m = mist(), f = fog();
         float share = f / Math.max(0.001f, m + f);
-        float[] white = SkyLook.mistColor(level.getTimeOfDay(1f)), grey = SkyLook.denseFogColor(level.getTimeOfDay(1f));
+        float t = level.getTimeOfDay(1f);
+        float[] white = SkyLook.particleColor(t, false), grey = SkyLook.particleColor(t, true);
         float v = 0.92f + level.random.nextFloat() * 0.08f;
         p.setColor(Mth.lerp(share, white[0], grey[0]) * v, Mth.lerp(share, white[1], grey[1]) * v, Mth.lerp(share, white[2], grey[2]) * v);
     }

@@ -71,6 +71,17 @@ public final class ClientEvents {
             e.setGreen(Mth.lerp(grey, e.getGreen(), l * 1.03f));
             e.setBlue(Mth.lerp(grey, e.getBlue(), l * 1.08f));
         }
+        // Night fog and mist: the distance-fog wall would be the near-black night sky (smog); fade it to moonlit grey.
+        float t = mc.level.getTimeOfDay((float) e.getPartialTick());
+        float m = GroundFog.mist(), f = GroundFog.fog();
+        float nf = (1f - SkyLook.day(t)) * Math.max(f * 0.85f, m * 0.45f);
+        if (nf > 0.002f) {
+            float share = f / Math.max(0.001f, m + f);
+            float[] mc1 = SkyLook.mistColor(t), fc = SkyLook.denseFogColor(t);
+            e.setRed(Mth.lerp(nf, e.getRed(), Mth.lerp(share, mc1[0], fc[0])));
+            e.setGreen(Mth.lerp(nf, e.getGreen(), Mth.lerp(share, mc1[1], fc[1])));
+            e.setBlue(Mth.lerp(nf, e.getBlue(), Mth.lerp(share, mc1[2], fc[2])));
+        }
         float wf = CloudLayer.inside() * 0.85f;
         if (wf > 0.002f) {
             float[] c = SkyLook.denseFogColor(mc.level.getTimeOfDay((float) e.getPartialTick()));

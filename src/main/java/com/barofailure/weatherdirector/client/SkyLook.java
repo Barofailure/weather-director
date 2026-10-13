@@ -94,20 +94,48 @@ public final class SkyLook {
         return Math.min(1f, brightness * Mth.lerp(seasonal(), 1f, STARS[ClientWeather.season]));
     }
 
-    private static float daylight(float timeOfDay) {
-        float day = Mth.clamp(Mth.cos(timeOfDay * Mth.TWO_PI) * 2f + 0.5f, 0f, 1f);
-        return 0.07f + 0.93f * day;
+    /** 1 in daylight, 0 at night (vanilla's sun curve). */
+    public static float day(float timeOfDay) {
+        return Mth.clamp(Mth.cos(timeOfDay * Mth.TWO_PI) * 2f + 0.5f, 0f, 1f);
     }
 
-    /** Light mist: near-white by day, dark by night. */
+    // Night fog and mist are lit by the moon and the sky: a cool blue-grey a little lighter than the night sky, never
+    // black (black fog reads as smog). These are final screen colours (fog colour, inside the cloud deck).
+    private static final float[] NIGHT_MIST = {0.16f, 0.18f, 0.24f};
+    private static final float[] NIGHT_FOG = {0.12f, 0.135f, 0.18f};
+
+    /** Light mist: near-white by day, moonlit blue-grey by night. */
     public static float[] mistColor(float timeOfDay) {
-        float k = daylight(timeOfDay);
-        return new float[] {0.88f * k, 0.90f * k, 0.93f * k};
+        return blend(day(timeOfDay), NIGHT_MIST, 0.88f, 0.90f, 0.93f);
     }
 
-    /** Dense fog: a heavier, darker grey. */
+    /** Dense fog: a heavier, darker grey; moonlit blue-grey by night. */
     public static float[] denseFogColor(float timeOfDay) {
-        float k = daylight(timeOfDay);
-        return new float[] {0.66f * k, 0.68f * k, 0.71f * k};
+        return blend(day(timeOfDay), NIGHT_FOG, 0.66f, 0.68f, 0.71f);
+    }
+
+    /**
+     * Colour for ground-fog particles. The game already darkens particles at night through the world lighting, so this
+     * must not darken them again (that made night mist and fog black); at night it only cools them towards moonlight.
+     */
+    public static float[] particleColor(float timeOfDay, boolean dense) {
+        float k = day(timeOfDay);
+        float r = dense ? 0.70f : 0.90f, g = dense ? 0.72f : 0.92f, b = dense ? 0.75f : 0.95f;
+        return new float[] {r * Mth.lerp(k, 0.82f, 1f), g * Mth.lerp(k, 0.88f, 1f), b};
+    }
+
+    /**
+     * How strongly thunder may darken the clouds. By day storm clouds go near-black against a bright sky; at night the
+     * clouds are already dark, and the same darkening turned them pitch black.
+     */
+    public static float thunderDarkening(float timeOfDay) {
+        return Mth.lerp(day(timeOfDay), 0.3f, 1f);
+    }
+
+    /** Clouds keep a faint sky glow on dark-moon nights instead of vanishing into black. */
+    public static final float MIN_MOON_LIGHT = 0.35f;
+
+    private static float[] blend(float k, float[] night, float r, float g, float b) {
+        return new float[] {Mth.lerp(k, night[0], r), Mth.lerp(k, night[1], g), Mth.lerp(k, night[2], b)};
     }
 }
