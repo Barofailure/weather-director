@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1
+
+- Night mist and fog no longer turn black. They are moonlit blue-grey now, a little lighter than the night sky.
+- Storm clouds stay dark grey at night instead of going pitch black, also on new-moon nights.
+
 ## 1.0.0
 
 First public release.
