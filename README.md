@@ -26,6 +26,9 @@ clouds first, rain only once they are thick. In winter it snows. Fog and mist co
 - **Wind you can hear.** A soft breeze and a strong, gusty wind follow the same one wind as the clouds and the rain:
   silent in calm air, a breeze that comes and goes, roaring in a thunderstorm, louder in the open and up high, muffled indoors, silent underwater.
   The wind recordings are made for this mod and ship inside it.
+- **The wind knows where you are.** In the open you hear it full; under a roof with open sides it turns dull and the
+  roof drums; indoors the house takes the gusts (pressure on the walls, a whistle at openings, rattling windows,
+  creaking wood). Deep inside it is silent. Works on airships too.
 - **Rain sounds follow the rain.** Drizzle is soft, heavy rain is loud. This also applies to the rain and snow sounds of
   AmbientSounds and Particle Rain.
 

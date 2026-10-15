@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.0
+
+- The wind knows where you are. Every wind (breeze and strong wind, from a whisper to a storm) has three versions that
+  play in step and blend as you move: in the open; sheltered under a roof with open sides (porch, shed, forest
+  canopy, under a balloon): duller, the roof drums in the gusts; indoors: muffled pressure on the walls, a thump with
+  each strong gust and a thin whistle, coming from the nearest opening. Deep inside, underground or in a sealed room
+  it is silent. Works on airships too.
+- Strong wind rattles the nearest window and makes nearby wood creak.
+- New client settings: indoor wind, rattling windows and creaking wood.
+
 ## 1.1.0
 
 - Wind sound: a soft breeze and a strong, gusty wind that follow the one global wind. Calm air is silent, a light
