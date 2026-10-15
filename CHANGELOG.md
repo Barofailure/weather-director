@@ -2,12 +2,14 @@
 
 ## 1.1.0
 
-- Wind sound: a soft breeze and a strong, gusty wind that follow the one global wind. Louder in the open and up high,
+- Wind sound: a soft breeze and a strong, gusty wind that follow the one global wind. Calm air is silent, a light
+  breeze only comes and goes, storms roar. Louder in the open and up high,
   muffled indoors and underground, silent underwater. Plays on the Weather volume slider; own volume setting.
 - Rain sounds follow the rain strength: drizzle is soft, rain medium, heavy rain full. Covers the game's rain and the
   rain and snow sounds of AmbientSounds and Particle Rain.
 - With AmbientSounds installed, its own wind (based only on height) is muted by a built-in resource pack, so the wind
   is heard once. Can be turned off in the settings.
+- `/wd wind <km/h>` holds the wind at a speed for testing, `/wd wind auto` gives it back to the weather.
 - New client settings: wind sound, wind volume, rain sound follows the rain, mute AmbientSounds' wind.
 
 ## 1.0.1

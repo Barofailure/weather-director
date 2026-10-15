@@ -24,7 +24,7 @@ clouds first, rain only once they are thick. In winter it snows. Fog and mist co
 ## Sound
 
 - **Wind you can hear.** A soft breeze and a strong, gusty wind follow the same one wind as the clouds and the rain:
-  quiet on a calm day, roaring in a thunderstorm, louder in the open and up high, muffled indoors, silent underwater.
+  silent in calm air, a breeze that comes and goes, roaring in a thunderstorm, louder in the open and up high, muffled indoors, silent underwater.
   The wind recordings are made for this mod and ship inside it.
 - **Rain sounds follow the rain.** Drizzle is soft, heavy rain is loud. This also applies to the rain and snow sounds of
   AmbientSounds and Particle Rain.
@@ -55,6 +55,7 @@ so its own weather does not compete.
 | `/wd` | current weather, clouds, rain, wind, season |
 | `/wd set <weather> [minutes] [now]` | switch the weather; `now` skips the build-up |
 | `/wd next` | roll the next weather |
+| `/wd wind <km/h>` / `/wd wind auto` | hold the wind at a speed (testing) / give it back to the weather |
 | `/wd reload` | re-read the config |
 
 `/weatherdirector` is the long name. `gamerule doWeatherCycle false` pauses the weather.
