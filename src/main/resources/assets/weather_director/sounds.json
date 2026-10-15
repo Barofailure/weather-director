@@ -1,0 +1,4 @@
+{
+  "wind.soft": {"sounds": [{"name": "weather_director:wind/soft", "stream": true}]},
+  "wind.strong": {"sounds": [{"name": "weather_director:wind/strong", "stream": true}]}
+}

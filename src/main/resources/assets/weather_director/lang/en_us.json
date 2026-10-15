@@ -30,5 +30,15 @@
   "weather_director.configuration.viewFog": "Fog shortens the view",
   "weather_director.configuration.viewFog.tooltip": "Fog, thunderstorms and being inside a cloud shorten how far you can see.",
   "weather_director.configuration.viewFogStrength": "View fog strength",
-  "weather_director.configuration.cloudLayer.tooltip": "No rain above the cloud deck, fog inside it."
+  "weather_director.configuration.cloudLayer.tooltip": "No rain above the cloud deck, fog inside it.",
+  "weather_director.configuration.sound": "Sound",
+  "weather_director.configuration.windSound": "Wind sound",
+  "weather_director.configuration.windSound.tooltip": "Hear the wind: louder when it blows harder, in the open and up high, quiet indoors.",
+  "weather_director.configuration.windVolume": "Wind volume",
+  "weather_director.configuration.windVolume.tooltip": "How loud the wind is. It also follows the game's Weather volume slider.",
+  "weather_director.configuration.rainFollowsStrength": "Rain sound follows the rain",
+  "weather_director.configuration.rainFollowsStrength.tooltip": "Rain and snow sounds are soft in drizzle and full in heavy rain (vanilla, AmbientSounds, Particle Rain).",
+  "weather_director.configuration.muteAmbientSoundsWind": "Mute AmbientSounds' wind",
+  "weather_director.configuration.muteAmbientSoundsWind.tooltip": "AmbientSounds' own wind ignores the weather; muting it means you hear one wind. Needs a restart.",
+  "subtitles.weather_director.wind": "Wind blows"
 }

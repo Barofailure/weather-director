@@ -24,9 +24,22 @@ public final class ClientEvents {
                 (c, parent) -> new net.neoforged.neoforge.client.gui.ConfigurationScreen(c, parent));
     }
 
+    /**
+     * AmbientSounds plays its own wind by height and open sky only, which would talk over the weather's wind. A built-in
+     * resource pack (always on, only when AmbientSounds is installed) sets that one AmbientSounds category to volume 0.
+     */
+    public static void addPacks(net.neoforged.neoforge.event.AddPackFindersEvent e) {
+        if (e.getPackType() != net.minecraft.server.packs.PackType.CLIENT_RESOURCES || !Compat.on(Compat.AMBIENTSOUNDS)) return;
+        boolean mute = !ClientConfig.SPEC.isLoaded() || (ClientConfig.WIND_SOUND.get() && ClientConfig.MUTE_AMBIENTSOUNDS_WIND.get());
+        if (!mute) return;
+        e.addPackFinders(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.barofailure.weatherdirector.WeatherDirectorMod.MOD_ID, "resourcepacks/ambientsounds_wind"),
+                net.minecraft.server.packs.PackType.CLIENT_RESOURCES, net.minecraft.network.chat.Component.literal("Weather Director: one wind"),
+                net.minecraft.server.packs.repository.PackSource.BUILT_IN, true, net.minecraft.server.packs.repository.Pack.Position.TOP);
+    }
+
     public static void init() {
-        NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> ClientWeather.tick());
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> ClientWeather.reset());
+        NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> { ClientWeather.tick(); WeatherSounds.tick(); });
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { ClientWeather.reset(); WeatherSounds.reset(); });
         NeoForge.EVENT_BUS.addListener(ClientEvents::renderFog);
         NeoForge.EVENT_BUS.addListener(ClientEvents::fogColor);
         if (Compat.on(Compat.DISTANT_HORIZONS)) DhFog.register();

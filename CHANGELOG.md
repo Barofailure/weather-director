@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0
+
+- Wind sound: a soft breeze and a strong, gusty wind that follow the one global wind. Louder in the open and up high,
+  muffled indoors and underground, silent underwater. Plays on the Weather volume slider; own volume setting.
+- Rain sounds follow the rain strength: drizzle is soft, rain medium, heavy rain full. Covers the game's rain and the
+  rain and snow sounds of AmbientSounds and Particle Rain.
+- With AmbientSounds installed, its own wind (based only on height) is muted by a built-in resource pack, so the wind
+  is heard once. Can be turned off in the settings.
+- New client settings: wind sound, wind volume, rain sound follows the rain, mute AmbientSounds' wind.
+
 ## 1.0.1
 
 - Night mist and fog no longer turn black. They are moonlit blue-grey now, a little lighter than the night sky.

@@ -28,6 +28,10 @@ public final class ClientConfig {
     public static final ModConfigSpec.BooleanValue VIEW_FOG;
     public static final ModConfigSpec.DoubleValue VIEW_FOG_STRENGTH;
     public static final ModConfigSpec.BooleanValue CLOUD_LAYER;
+    public static final ModConfigSpec.BooleanValue WIND_SOUND;
+    public static final ModConfigSpec.DoubleValue WIND_VOLUME;
+    public static final ModConfigSpec.BooleanValue RAIN_FOLLOWS_STRENGTH;
+    public static final ModConfigSpec.BooleanValue MUTE_AMBIENTSOUNDS_WIND;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -55,6 +59,13 @@ public final class ClientConfig {
         VIEW_FOG_STRENGTH = b.comment("How much they shorten the view (0 = not at all).").defineInRange("viewFogStrength", 1.0, 0.0, 1.0);
         b.pop().push("cloudLayer");
         CLOUD_LAYER = b.comment("No rain above the cloud deck, fog inside it.").define("cloudLayer", true);
+        b.pop().push("sound");
+        WIND_SOUND = b.comment("Hear the wind: louder when it blows harder, in the open and up high, quiet indoors.").define("windSound", true);
+        WIND_VOLUME = b.comment("How loud the wind is (also follows the game's Weather volume).").defineInRange("windVolume", 1.0, 0.0, 2.0);
+        RAIN_FOLLOWS_STRENGTH = b.comment("Rain and snow sounds are soft in drizzle and full in heavy rain (vanilla, AmbientSounds, Particle Rain).")
+                .define("rainFollowsStrength", true);
+        MUTE_AMBIENTSOUNDS_WIND = b.comment("With AmbientSounds installed, its own wind (which ignores the weather) is muted so the wind is only heard once. Needs a restart.")
+                .define("muteAmbientSoundsWind", true);
         b.pop();
         SPEC = b.build();
     }

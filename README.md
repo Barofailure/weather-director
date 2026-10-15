@@ -21,6 +21,14 @@ NeoForge 1.21.1. Made for the [Barofailure](https://barofailure.com) server. [Di
 The whole overworld has the same weather. It follows fronts (clear, clouds, rain, clearing) and builds up over minutes:
 clouds first, rain only once they are thick. In winter it snows. Fog and mist come at dawn and lift again.
 
+## Sound
+
+- **Wind you can hear.** A soft breeze and a strong, gusty wind follow the same one wind as the clouds and the rain:
+  quiet on a calm day, roaring in a thunderstorm, louder in the open and up high, muffled indoors, silent underwater.
+  The wind recordings are made for this mod and ship inside it.
+- **Rain sounds follow the rain.** Drizzle is soft, heavy rain is loud. This also applies to the rain and snow sounds of
+  AmbientSounds and Particle Rain.
+
 ## Works with (all optional)
 
 | Mod | Adds |
@@ -29,6 +37,7 @@ clouds first, rain only once they are thick. In winter it snows. Fog and mist co
 | [Better Clouds](https://modrinth.com/mod/better-clouds) | cloud cover, grey storm clouds, shared drift, a cloud deck you can fly into |
 | [Particle Rain](https://modrinth.com/mod/particle-rain) | wind-blown rain and snow, light drizzle, soft ground fog |
 | [Distant Horizons](https://modrinth.com/mod/distanthorizons) | weather fog on the far terrain, no ring at the render distance |
+| [AmbientSounds](https://modrinth.com/mod/ambientsounds) | its rain follows the rain strength; its own wind (which ignores the weather) is muted so you hear one wind |
 
 Without them the weather still changes for everyone, only plainer. Set Ecliptic Seasons `UseSolarWeather = false`
 so its own weather does not compete.
@@ -54,7 +63,8 @@ so its own weather does not compete.
 
 - **Server:** `config/weather_director.json`: how long each weather lasts, what follows it, how it looks, season weights.
 - **Client:** Mods, Weather Director, Config (or `config/weather_director-client.toml`): clouds, grey skies,
-  seasonal skies, wind on rain, ground fog amount, particle budget, view fog.
+  seasonal skies, wind on rain, ground fog amount, particle budget, view fog, wind sound and its volume, rain sound
+  following the rain, muting AmbientSounds' wind. The wind plays on the game's Weather volume slider.
 - Vanilla settings are respected: Particles scales the ground fog, a manual Clouds Off stays off,
   Hide Lightning Flashes works as usual.
 

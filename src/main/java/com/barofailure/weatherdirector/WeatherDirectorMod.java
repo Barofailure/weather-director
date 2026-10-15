@@ -45,6 +45,7 @@ public class WeatherDirectorMod {
             container.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, com.barofailure.weatherdirector.client.ClientConfig.SPEC);
             com.barofailure.weatherdirector.client.ClientEvents.registerConfigScreen(container);
             ClientEvents.init();
+            modBus.addListener(ClientEvents::addPacks);
         }
     }
 

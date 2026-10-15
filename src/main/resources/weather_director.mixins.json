@@ -14,7 +14,8 @@
     "client.DimensionSpecialEffectsMixin",
     "client.ParticleAccessor",
     "client.LevelRainMixin",
-    "client.SingleQuadParticleAccessor"
+    "client.SingleQuadParticleAccessor",
+    "client.SoundEngineVolumeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
