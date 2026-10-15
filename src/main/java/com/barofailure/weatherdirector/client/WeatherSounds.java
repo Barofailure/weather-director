@@ -50,14 +50,19 @@ public final class WeatherSounds {
             return;
         }
         t += 0.05f;
-        float ws = Mth.clamp(ClientWeather.windSpeed, 0f, 1f);
+        float ws = Mth.clamp(ClientWeather.windSpeed, 0f, 2f);
         float exposure = exposure(mc);
         float vol = (float) (double) ClientConfig.WIND_VOLUME.get();
-        // Gusts: two slow waves, the strong wind swings much more than the breeze.
         float wave = 0.6f * Mth.sin(t * 0.31f) + 0.4f * Mth.sin(t * 0.113f + 1.7f);
+        // Breeze: nothing below ~5 km/h, then it fades in. Light wind is only heard now and then (a gust gate that
+        // opens more often as the wind rises, always open from ~33 km/h), like a real breeze you do not always notice.
         float strongMix = Mth.clamp((ws - 0.3f) / 0.7f, 0f, 1f);
-        float softV = (float) Math.pow(Mth.clamp(ws / 0.35f, 0f, 1f), 0.8) * 0.55f * (1f - 0.6f * strongMix) * (0.94f + 0.06f * wave);
-        float strongV = (float) Math.pow(strongMix, 1.2) * 0.85f * (0.8f + 0.2f * wave);
+        float open = smooth(ws, 0.1f, 0.55f);
+        float threshold = 0.72f * (1f - open);
+        float gate = open >= 1f ? 1f : smooth(gust.value(t), threshold - 0.12f, threshold + 0.12f);
+        float softV = smooth(ws, 0.08f, 0.5f) * 0.3f * gate * (1f - 0.6f * strongMix) * (0.94f + 0.06f * wave);
+        // Strong wind: barely in rain, clear in heavy rain, full in a thunderstorm.
+        float strongV = strongMix * strongMix * 0.85f * (0.8f + 0.2f * wave);
         if (retry > 0) retry--;
         soft = keep(mc, soft, SOFT);
         strong = keep(mc, strong, STRONG);
@@ -67,6 +72,36 @@ public final class WeatherSounds {
         if (mc.level.getGameTime() % 100 == 0) {
             WeatherDirectorMod.LOG.debug("weather sounds: wind {} exposure {} | breeze {} strong {} | rain level {} -> rain sound x{}",
                     ws, exposure, soft.getVolume(), strong.getVolume(), mc.level.getRainLevel(1f), rainFactor(mc.level.getRainLevel(1f)));
+        }
+    }
+
+    /** Slow random swells 0..1 for the breeze's gust gate (features ~8 s apart). */
+    private static final SmoothNoise gust = new SmoothNoise(8f);
+
+    private static float smooth(float x, float from, float to) {
+        float u = Mth.clamp((x - from) / (to - from), 0f, 1f);
+        return u * u * (3f - 2f * u);
+    }
+
+    static final class SmoothNoise {
+        private final float period;
+        private final java.util.Random random = new java.util.Random();
+        private int cell = Integer.MIN_VALUE;
+        private float a, b;
+
+        SmoothNoise(float period) {
+            this.period = period;
+        }
+
+        float value(float time) {
+            int c = Mth.floor(time / period);
+            if (c != cell) {
+                a = cell == c - 1 ? b : random.nextFloat();
+                b = random.nextFloat();
+                cell = c;
+            }
+            float u = time / period - c;
+            return Mth.lerp(u * u * (3f - 2f * u), a, b);
         }
     }
 

@@ -110,8 +110,22 @@ public final class WeatherDirector {
         cover += Mth.clamp(target - cover, -rate, rate);
     }
 
+    /** Wind speed held by /wd wind (0..2, 1 = 60 km/h) for testing; -1 = the weather decides. Not saved. */
+    private static float windHold = -1;
+
+    static float windHold() {
+        return windHold;
+    }
+
+    /** /wd wind: hold the wind at a speed right away (or release it with -1) and tell the clients. */
+    static void holdWind(ServerLevel overworld, float speed) {
+        windHold = speed;
+        if (speed >= 0) state.windSpeed = speed;
+        sync(overworld.getServer());
+    }
+
     private static void tickWind() {
-        float speedTarget = config.look(state.kind).wind;
+        float speedTarget = windHold >= 0 ? windHold : config.look(state.kind).wind;
         float rate = (float) (1.0 / (Math.max(1.0, config.rampSeconds) * 20.0));
         state.windSpeed += Mth.clamp(speedTarget - state.windSpeed, -rate, rate);
         float maxTurn = (float) Math.toRadians(config.windTurnDegreesPerMinute) / TICKS_PER_MINUTE;
