@@ -20,13 +20,14 @@ import net.minecraft.world.phys.Vec3;
  */
 public final class WindPlace {
     public static float open = 1f, sheltered, indoor;
-    /** Roof and walls but away from the outside (cave, sealed room); open + sheltered + indoor + inner = 1. */
+    /** Away from the outside (cave of any size, sealed room); open + sheltered + indoor + inner = 1. */
     public static float inner;
     /** 0 at the surface, 1 from ~30 blocks below it (no sky light). */
     public static float deep;
     private static float openGoal = 1f, shelteredGoal, indoorGoal, innerGoal, deepGoal;
-    /** Diagnostics for the debug log: roof cover, open sides, exterior walls. */
+    /** Diagnostics for the debug log: roof cover, open sides, exterior walls, sky light. */
     static float roof, sides, exterior;
+    static int sky;
     /** Where the indoor wind should seem to come from (an opening or the outer walls), null = all around. */
     public static Vec3 from;
     private static int clock;
@@ -73,14 +74,19 @@ public final class WindPlace {
         sides = openRays / (float) (SIDE_RAYS + UP_RAYS);
         exterior = hits == 0 ? 1f : ext / (float) hits;
         int skyLight = level.getBrightness(LightLayer.SKY, BlockPos.containing(eye));
+        sky = skyLight;
         // Open sky above: open. A roof over open sides: sheltered. A roof with walls: indoors, but only near the outside
         // (outer walls with sky behind them, or sky light coming in); deep in a cave or a sealed bunker it is silent.
         float sideOpen = smooth(sides, 0.2f, 0.55f);
-        float nearOutside = Math.max(smooth(exterior, 0.15f, 0.6f), smooth(skyLight, 3f, 11f));
-        openGoal = 1f - roof;
-        shelteredGoal = roof * sideOpen;
+        // Houses count by their outer walls; sky light alone (a cave mouth, a tunnel) only right at the opening.
+        float nearOutside = Math.max(smooth(exterior, 0.15f, 0.6f), smooth(skyLight, 8f, 14f));
+        // Open and sheltered also need sky light: outdoors 15, under a porch 11 or more, a few blocks into a cave it is
+        // gone, however big the cave (its roof and walls can be out of reach of the rays). Big caves get no wind.
+        float outside = smooth(skyLight, 4f, 11f);
+        openGoal = (1f - roof) * outside;
+        shelteredGoal = roof * sideOpen * outside;
         indoorGoal = roof * (1f - sideOpen) * nearOutside;
-        innerGoal = roof * (1f - sideOpen) * (1f - nearOutside);
+        innerGoal = Math.max(0f, 1f - openGoal - shelteredGoal - indoorGoal);
         int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING, Mth.floor(eye.x), Mth.floor(eye.z));
         deepGoal = smooth((float) (surface - eye.y), 10f, 30f) * (1f - smooth(skyLight, 2f, 8f));
         Vec3 toward = openRays > 0 ? openSum : extSum;

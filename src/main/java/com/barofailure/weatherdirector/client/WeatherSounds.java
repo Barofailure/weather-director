@@ -102,8 +102,8 @@ public final class WeatherSounds {
             }
         }
         if (mc.level.getGameTime() % 100 == 0) {
-            WeatherDirectorMod.LOG.debug("weather sounds: wind {} | open {} sheltered {} indoor {} (roof {} sides {} outer walls {}) | breeze {}/{}/{} strong {}/{}/{} | rain level {} -> rain sound x{} | inner {} deep {} | rain place x{} thunder place x{}",
-                    ws, place[0], place[1], place[2], WindPlace.roof, WindPlace.sides, WindPlace.exterior,
+            WeatherDirectorMod.LOG.debug("weather sounds: wind {} | open {} sheltered {} indoor {} (roof {} sides {} outer walls {} sky {}) | breeze {}/{}/{} strong {}/{}/{} | rain level {} -> rain sound x{} | inner {} deep {} | rain place x{} thunder place x{}",
+                    ws, place[0], place[1], place[2], WindPlace.roof, WindPlace.sides, WindPlace.exterior, WindPlace.sky,
                     loops[0][0].getVolume(), loops[1][0].getVolume(), loops[2][0].getVolume(),
                     loops[0][1].getVolume(), loops[1][1].getVolume(), loops[2][1].getVolume(),
                     mc.level.getRainLevel(1f), rainFactor(mc.level.getRainLevel(1f)), WindPlace.inner, WindPlace.deep,

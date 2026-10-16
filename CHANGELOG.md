@@ -12,6 +12,7 @@
   surface both fade out and are silent from about 30 blocks down.
 - Thunder comes after the flash: the further away the strike, the later you hear it (speed of sound).
 - Fixed: the rain sounds of the game itself (not only AmbientSounds) now really follow the rain strength.
+- No wind in caves, however big: the wind needs sky light; at a cave mouth only a little.
 - New client settings: indoor wind, rain and thunder indoors, thunder after the flash.
 
 ## 1.1.0
