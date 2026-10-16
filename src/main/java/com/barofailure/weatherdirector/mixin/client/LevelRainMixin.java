@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class LevelRainMixin {
     @Inject(method = "getRainLevel", at = @At("RETURN"), cancellable = true)
     private void weatherDirector$aboveClouds(float delta, CallbackInfoReturnable<Float> cir) {
-        if ((Object) this instanceof ClientLevel level && CloudLayer.above() > 0.001f && ClientWeather.active(level)) {
+        if ((Object) this instanceof ClientLevel level && CloudLayer.aboveRain() > 0.001f && ClientWeather.active(level)) {
             cir.setReturnValue(CloudLayer.visibleRain(cir.getReturnValue()));
         }
     }

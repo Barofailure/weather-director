@@ -13,6 +13,8 @@
 - Thunder comes after the flash: the further away the strike, the later you hear it (speed of sound).
 - Fixed: the rain sounds of the game itself (not only AmbientSounds) now really follow the rain strength.
 - No wind in caves, however big: the wind needs sky light; at a cave mouth only a little.
+- Fixed: above the clouds it now stops raining also while the cloud deck is still building or thinning out (light
+  rain used to keep falling above it then, however high you flew).
 - New client settings: indoor wind, rain and thunder indoors, thunder after the flash.
 
 ## 1.1.0

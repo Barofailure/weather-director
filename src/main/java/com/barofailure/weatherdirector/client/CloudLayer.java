@@ -11,7 +11,7 @@ import com.barofailure.weatherdirector.Compat;
  * installed (base = dimension cloud height + yOffset, puffs from -0.3 * yRange to +yRange), else the vanilla layer.
  */
 public final class CloudLayer {
-    private static float above, inside;
+    private static float above, aboveRain, inside;
     private static final float BAND_SHIFT = 5f;
     /** Test rig only (env BW_NO_CLOUD_FOG=1): no cloud fog, to see where Better Clouds' puffs really are. */
     private static final boolean NO_CLOUD_FOG = "1".equals(System.getenv("BW_NO_CLOUD_FOG"));
@@ -42,12 +42,13 @@ public final class CloudLayer {
         ClientLevel level = mc.level;
         if (level == null || !ClientWeather.active(level) || !mc.gameRenderer.getMainCamera().isInitialized() || !ClientConfig.CLOUD_LAYER.get()) {
             above += (0f - above) * 0.1f;
+            aboveRain += (0f - aboveRain) * 0.1f;
             inside += (0f - inside) * 0.1f;
             return;
         }
         float base = level.effects().getCloudHeight();
         if (Float.isNaN(base)) {
-            above = inside = 0f;
+            above = aboveRain = inside = 0f;
             return;
         }
         float lo = base - 1f, hi = base + 5f;
@@ -62,20 +63,28 @@ public final class CloudLayer {
         bottom = lo;
         top = hi;
         double y = mc.gameRenderer.getMainCamera().getPosition().y;
-        // Only a real deck stops rain or wraps you in fog; scattered fair-weather clouds do not.
+        // Only a real deck clears the sky above it or wraps you in fog; scattered fair-weather clouds do not.
         float deck = Mth.clamp((ClientWeather.cover - 0.6f) / 0.3f, 0f, 1f);
-        // Rain is gone 4 blocks above the deck top (it starts fading 2 below it); cloud fog builds over the first 6 blocks
+        // Rain is gone 4 blocks above the deck top (it starts fading 2 below it), also while the deck is still building
+        // or thinning out (light rain falls from it then, but never above it); cloud fog builds over the first 6 blocks
         // inside the deck and thins over the last 6.
-        float aboveNow = Mth.clamp((float) (y - (hi - 2f)) / 6f, 0f, 1f) * deck;
+        float overTop = Mth.clamp((float) (y - (hi - 2f)) / 6f, 0f, 1f);
+        float aboveNow = overTop * deck;
         float depth = Math.min((float) (y - lo), (float) (hi - y));
         float insideNow = Mth.clamp(depth / 6f, 0f, 1f) * deck * Mth.clamp((ClientWeather.cover - 0.8f) / 0.2f, 0f, 1f);
         if (NO_CLOUD_FOG) insideNow = 0f; // test rig: see the real clouds without our cloud fog
         above += (aboveNow - above) * 0.1f;
+        aboveRain += (overTop - aboveRain) * 0.1f;
         inside += (insideNow - inside) * 0.1f;
+    }
+
+    /** 0 below the deck top .. 1 above it, whatever the cover (eased): rain only falls below the clouds. */
+    public static float aboveRain() {
+        return aboveRain;
     }
 
     /** Client-side rain as seen from here: none above the deck. Used for every rain-level read on the client. */
     public static float visibleRain(float rainLevel) {
-        return rainLevel * (1f - above);
+        return rainLevel * (1f - aboveRain);
     }
 }
