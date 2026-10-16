@@ -31,6 +31,8 @@ clouds first, rain only once they are thick. In winter it snows. Fog and mist co
   Deep inside it is silent. Works on airships too.
 - **Rain sounds follow the rain.** Drizzle is soft, heavy rain is loud. This also applies to the rain and snow sounds of
   AmbientSounds and Particle Rain.
+- **Rain and thunder indoors.** Under a roof and indoors rain and thunder are quieter, thunder sounds deeper inside, and
+  deep underground both are silent. Thunder comes after the flash, later the further away the strike.
 
 ## Works with (all optional)
 
@@ -40,7 +42,7 @@ clouds first, rain only once they are thick. In winter it snows. Fog and mist co
 | [Better Clouds](https://modrinth.com/mod/better-clouds) | cloud cover, grey storm clouds, shared drift, a cloud deck you can fly into |
 | [Particle Rain](https://modrinth.com/mod/particle-rain) | wind-blown rain and snow, light drizzle, soft ground fog |
 | [Distant Horizons](https://modrinth.com/mod/distanthorizons) | weather fog on the far terrain, no ring at the render distance |
-| [AmbientSounds](https://modrinth.com/mod/ambientsounds) | its rain follows the rain strength; its own wind (which ignores the weather) is muted so you hear one wind |
+| [AmbientSounds](https://modrinth.com/mod/ambientsounds) | its rain follows the rain strength, its rain and storm get quieter indoors; its own wind (which ignores the weather) is muted so you hear one wind |
 
 Without them the weather still changes for everyone, only plainer. Set Ecliptic Seasons `UseSolarWeather = false`
 so its own weather does not compete.

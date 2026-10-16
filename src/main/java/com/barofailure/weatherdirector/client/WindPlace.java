@@ -6,6 +6,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -14,11 +15,16 @@ import net.minecraft.world.phys.Vec3;
  * Where the camera stands for the wind: in the open, sheltered (a roof but open sides: porch, shed, canopy) or indoors
  * (roof and walls). Twice a second a handful of short rays look up and around: what blocks them, whether a wall has open
  * sky right behind it (a house wall, not a cave wall) and where the nearest opening is.
- * The three weights ease smoothly so walking through a door blends the sounds.
+ * The weights ease smoothly so walking through a door blends the sounds. Rain and thunder use them too (WeatherSounds),
+ * plus how deep below the surface the camera is.
  */
 public final class WindPlace {
     public static float open = 1f, sheltered, indoor;
-    private static float openGoal = 1f, shelteredGoal, indoorGoal;
+    /** Roof and walls but away from the outside (cave, sealed room); open + sheltered + indoor + inner = 1. */
+    public static float inner;
+    /** 0 at the surface, 1 from ~30 blocks below it (no sky light). */
+    public static float deep;
+    private static float openGoal = 1f, shelteredGoal, indoorGoal, innerGoal, deepGoal;
     /** Diagnostics for the debug log: roof cover, open sides, exterior walls. */
     static float roof, sides, exterior;
     /** Where the indoor wind should seem to come from (an opening or the outer walls), null = all around. */
@@ -35,6 +41,8 @@ public final class WindPlace {
         open += (openGoal - open) * 0.08f;
         sheltered += (shelteredGoal - sheltered) * 0.08f;
         indoor += (indoorGoal - indoor) * 0.08f;
+        inner += (innerGoal - inner) * 0.08f;
+        deep += (deepGoal - deep) * 0.08f;
     }
 
     private static void probe(Minecraft mc) {
@@ -72,6 +80,9 @@ public final class WindPlace {
         openGoal = 1f - roof;
         shelteredGoal = roof * sideOpen;
         indoorGoal = roof * (1f - sideOpen) * nearOutside;
+        innerGoal = roof * (1f - sideOpen) * (1f - nearOutside);
+        int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING, Mth.floor(eye.x), Mth.floor(eye.z));
+        deepGoal = smooth((float) (surface - eye.y), 10f, 30f) * (1f - smooth(skyLight, 2f, 8f));
         Vec3 toward = openRays > 0 ? openSum : extSum;
         from = toward.lengthSqr() > 0.01 ? eye.add(toward.normalize().scale(3)) : null;
     }

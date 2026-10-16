@@ -33,6 +33,8 @@ public final class ClientConfig {
     public static final ModConfigSpec.BooleanValue RAIN_FOLLOWS_STRENGTH;
     public static final ModConfigSpec.BooleanValue MUTE_AMBIENTSOUNDS_WIND;
     public static final ModConfigSpec.BooleanValue INDOOR_WIND;
+    public static final ModConfigSpec.BooleanValue MUFFLE_INDOORS;
+    public static final ModConfigSpec.BooleanValue THUNDER_DELAY;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -67,6 +69,9 @@ public final class ClientConfig {
                 .define("indoorWind", true);
         RAIN_FOLLOWS_STRENGTH = b.comment("Rain and snow sounds are soft in drizzle and full in heavy rain (vanilla, AmbientSounds, Particle Rain).")
                 .define("rainFollowsStrength", true);
+        MUFFLE_INDOORS = b.comment("Rain and thunder are quieter under a roof and indoors, thunder sounds duller inside, and both are silent deep underground.")
+                .define("muffleIndoors", true);
+        THUNDER_DELAY = b.comment("Thunder comes after the flash, later the further away the strike (speed of sound).").define("thunderDelay", true);
         MUTE_AMBIENTSOUNDS_WIND = b.comment("With AmbientSounds installed, its own wind (which ignores the weather) is muted so the wind is only heard once. Needs a restart.")
                 .define("muteAmbientSoundsWind", true);
         b.pop();

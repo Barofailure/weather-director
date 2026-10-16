@@ -7,7 +7,12 @@
   canopy, under a balloon): duller, the roof drums in the gusts; indoors: muffled pressure on the walls, a thump with
   each strong gust and a thin whistle, coming from the nearest opening. Deep inside, underground or in a sealed room
   it is silent. Works on airships too.
-- New client setting: indoor wind.
+- Rain and thunder know where you are too. Under a roof the rain is a bit quieter, indoors about half as loud, in a cave
+  or sealed room quieter again; thunder the same, and indoors it also sounds deeper. From about 10 blocks below the
+  surface both fade out and are silent from about 30 blocks down.
+- Thunder comes after the flash: the further away the strike, the later you hear it (speed of sound).
+- Fixed: the rain sounds of the game itself (not only AmbientSounds) now really follow the rain strength.
+- New client settings: indoor wind, rain and thunder indoors, thunder after the flash.
 
 ## 1.1.0
 
