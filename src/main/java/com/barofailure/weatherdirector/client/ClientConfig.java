@@ -33,7 +33,6 @@ public final class ClientConfig {
     public static final ModConfigSpec.BooleanValue RAIN_FOLLOWS_STRENGTH;
     public static final ModConfigSpec.BooleanValue MUTE_AMBIENTSOUNDS_WIND;
     public static final ModConfigSpec.BooleanValue INDOOR_WIND;
-    public static final ModConfigSpec.BooleanValue RATTLES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -66,7 +65,6 @@ public final class ClientConfig {
         WIND_VOLUME = b.comment("How loud the wind is (also follows the game's Weather volume).").defineInRange("windVolume", 1.0, 0.0, 2.0);
         INDOOR_WIND = b.comment("The wind sounds different under a roof and indoors: duller, the house takes the gusts, a whistle at openings.")
                 .define("indoorWind", true);
-        RATTLES = b.comment("In strong wind, windows near you rattle and wood creaks.").define("rattles", true);
         RAIN_FOLLOWS_STRENGTH = b.comment("Rain and snow sounds are soft in drizzle and full in heavy rain (vanilla, AmbientSounds, Particle Rain).")
                 .define("rainFollowsStrength", true);
         MUTE_AMBIENTSOUNDS_WIND = b.comment("With AmbientSounds installed, its own wind (which ignores the weather) is muted so the wind is only heard once. Needs a restart.")

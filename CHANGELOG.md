@@ -7,8 +7,7 @@
   canopy, under a balloon): duller, the roof drums in the gusts; indoors: muffled pressure on the walls, a thump with
   each strong gust and a thin whistle, coming from the nearest opening. Deep inside, underground or in a sealed room
   it is silent. Works on airships too.
-- Strong wind rattles the nearest window and makes nearby wood creak.
-- New client settings: indoor wind, rattling windows and creaking wood.
+- New client setting: indoor wind.
 
 ## 1.1.0
 

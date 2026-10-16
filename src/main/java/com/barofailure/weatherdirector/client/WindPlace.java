@@ -2,21 +2,18 @@ package com.barofailure.weatherdirector.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.Tags;
 
 /**
  * Where the camera stands for the wind: in the open, sheltered (a roof but open sides: porch, shed, canopy) or indoors
  * (roof and walls). Twice a second a handful of short rays look up and around: what blocks them, whether a wall has open
- * sky right behind it (a house wall, not a cave wall) and where the nearest window, wooden part and opening are.
+ * sky right behind it (a house wall, not a cave wall) and where the nearest opening is.
  * The three weights ease smoothly so walking through a door blends the sounds.
  */
 public final class WindPlace {
@@ -24,8 +21,6 @@ public final class WindPlace {
     private static float openGoal = 1f, shelteredGoal, indoorGoal;
     /** Diagnostics for the debug log: roof cover, open sides, exterior walls. */
     static float roof, sides, exterior;
-    /** Nearest glass and wooden block hit by a ray (block centres), null when none. */
-    public static Vec3 glass, wood;
     /** Where the indoor wind should seem to come from (an opening or the outer walls), null = all around. */
     public static Vec3 from;
     private static int clock;
@@ -52,8 +47,7 @@ public final class WindPlace {
         roof = roofHits / (float) up.length;
         // Sides: a ring around and a ring tilted up 35 degrees.
         int openRays = 0, hits = 0, ext = 0;
-        double glassDist = Double.MAX_VALUE, woodDist = Double.MAX_VALUE;
-        Vec3 openSum = Vec3.ZERO, extSum = Vec3.ZERO, nearGlass = null, nearWood = null;
+        Vec3 openSum = Vec3.ZERO, extSum = Vec3.ZERO;
         for (int i = 0; i < SIDE_RAYS + UP_RAYS; i++) {
             Vec3 d = i < SIDE_RAYS ? dir(i * 360.0 / SIDE_RAYS, 0) : dir((i - SIDE_RAYS) * 360.0 / UP_RAYS + 22.5, 35);
             BlockHitResult h = cast(mc, eye, d, SIDE_LEN);
@@ -63,18 +57,7 @@ public final class WindPlace {
                 continue;
             }
             hits++;
-            BlockPos p = h.getBlockPos();
-            BlockState s = level.getBlockState(p);
-            double dist = h.getLocation().distanceTo(eye);
-            if ((s.is(Tags.Blocks.GLASS_BLOCKS) || s.is(Tags.Blocks.GLASS_PANES)) && dist < glassDist) {
-                glassDist = dist;
-                nearGlass = Vec3.atCenterOf(p);
-            }
-            if (wooden(s) && dist < woodDist) {
-                woodDist = dist;
-                nearWood = Vec3.atCenterOf(p);
-            }
-            if (exteriorBehind(level, p, d)) {
+            if (exteriorBehind(level, h.getBlockPos(), d)) {
                 ext++;
                 extSum = extSum.add(d);
             }
@@ -89,8 +72,6 @@ public final class WindPlace {
         openGoal = 1f - roof;
         shelteredGoal = roof * sideOpen;
         indoorGoal = roof * (1f - sideOpen) * nearOutside;
-        glass = nearGlass;
-        wood = nearWood;
         Vec3 toward = openRays > 0 ? openSum : extSum;
         from = toward.lengthSqr() > 0.01 ? eye.add(toward.normalize().scale(3)) : null;
     }
@@ -107,11 +88,6 @@ public final class WindPlace {
             if (level.getBlockState(p).isAir()) return level.canSeeSky(p);
         }
         return false;
-    }
-
-    private static boolean wooden(BlockState s) {
-        return s.is(BlockTags.PLANKS) || s.is(BlockTags.LOGS) || s.is(BlockTags.WOODEN_SLABS) || s.is(BlockTags.WOODEN_STAIRS)
-                || s.is(BlockTags.WOODEN_DOORS) || s.is(BlockTags.WOODEN_TRAPDOORS) || s.is(BlockTags.WOODEN_FENCES);
     }
 
     private static Vec3 dir(double yawDeg, double pitchUpDeg) {

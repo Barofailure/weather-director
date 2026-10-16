@@ -3,7 +3,6 @@ package com.barofailure.weatherdirector.client;
 import com.barofailure.weatherdirector.WeatherDirectorMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -17,15 +16,13 @@ import java.util.Set;
  * Weather you can hear. Wind: a soft breeze and a strong gusty wind whose loudness follows the server's one global wind.
  * Each comes in three versions that play together, in step, and blend by where the camera is (WindPlace): in the open,
  * sheltered under a roof (duller, the roof drums in gusts) and indoors (muffled pressure on the walls, thumps and a thin
- * whistle with the gusts, coming from the nearest opening). In strong wind, windows rattle and wood creaks nearby.
+ * whistle with the gusts, coming from the nearest opening).
  * Rain: rain and snow sounds of the game, AmbientSounds and Particle Rain get quieter in drizzle and louder in heavy
  * rain (they otherwise play at one fixed volume). All of it only while a Weather Director server is sending.
  */
 public final class WeatherSounds {
     private static final String[] PLACES = {"", "_sheltered", "_indoor"};
     private static final SoundEvent[] SOFT = events("wind.soft"), STRONG = events("wind.strong");
-    private static final SoundEvent RATTLE = SoundEvent.createVariableRangeEvent(id("wind.rattle"));
-    private static final SoundEvent CREAK = SoundEvent.createVariableRangeEvent(id("wind.creak"));
     /** Rain and snow beds whose volume follows the rain strength. */
     private static final Set<ResourceLocation> RAIN = Set.of(
             ResourceLocation.withDefaultNamespace("weather.rain"), ResourceLocation.withDefaultNamespace("weather.rain.above"),
@@ -35,10 +32,9 @@ public final class WeatherSounds {
 
     /** [place][layer]: place 0 open, 1 sheltered, 2 indoors; layer 0 breeze, 1 strong. Started together so gusts line up. */
     private static final WindLoop[][] loops = new WindLoop[3][2];
-    private static float t, lastWave;
+    private static float t;
     /** Ticks until stopped loops may be started again (a game without a working sound device never keeps one). */
-    private static int retry, rattleCooldown, creakCooldown;
-    private static final java.util.Random random = new java.util.Random();
+    private static int retry;
 
     private WeatherSounds() {}
 
@@ -89,11 +85,9 @@ public final class WeatherSounds {
                 loops[i][1].at(from);
             }
         }
-        if (ClientConfig.INDOOR_WIND.get() && ClientConfig.RATTLES.get()) oneShots(mc, ws, wave, vol);
-        lastWave = wave;
         if (mc.level.getGameTime() % 100 == 0) {
-            WeatherDirectorMod.LOG.debug("weather sounds: wind {} | open {} sheltered {} indoor {} (roof {} sides {} outer walls {} glass {} wood {}) | breeze {}/{}/{} strong {}/{}/{} | rain level {} -> rain sound x{}",
-                    ws, place[0], place[1], place[2], WindPlace.roof, WindPlace.sides, WindPlace.exterior, WindPlace.glass != null, WindPlace.wood != null,
+            WeatherDirectorMod.LOG.debug("weather sounds: wind {} | open {} sheltered {} indoor {} (roof {} sides {} outer walls {}) | breeze {}/{}/{} strong {}/{}/{} | rain level {} -> rain sound x{}",
+                    ws, place[0], place[1], place[2], WindPlace.roof, WindPlace.sides, WindPlace.exterior,
                     loops[0][0].getVolume(), loops[1][0].getVolume(), loops[2][0].getVolume(),
                     loops[0][1].getVolume(), loops[1][1].getVolume(), loops[2][1].getVolume(),
                     mc.level.getRainLevel(1f), rainFactor(mc.level.getRainLevel(1f)));
@@ -108,30 +102,6 @@ public final class WeatherSounds {
         if (!ClientConfig.INDOOR_WIND.get()) return new float[] {ClientWeather.skyExposure * height, 0f, 0f};
         WindPlace.tick(mc);
         return new float[] {WindPlace.open * height, WindPlace.sheltered * 0.9f, WindPlace.indoor};
-    }
-
-    /** Strong gusts rattle the nearest window; storms make the nearest wood creak. Both come from that block. */
-    private static void oneShots(Minecraft mc, float ws, float wave, float vol) {
-        float inside = WindPlace.indoor + WindPlace.sheltered;
-        if (rattleCooldown > 0) rattleCooldown--;
-        if (creakCooldown > 0) creakCooldown--;
-        boolean gustRising = wave > 0.35f && lastWave <= 0.35f || random.nextFloat() < 0.004f;
-        if (gustRising && ws > 0.5f && inside > 0.3f && WindPlace.glass != null && rattleCooldown == 0) {
-            float v = (0.15f + 0.5f * Mth.clamp((ws - 0.5f) * 2f, 0f, 1f)) * inside * vol;
-            play(mc, RATTLE, WindPlace.glass, v, 0.9f + 0.2f * random.nextFloat());
-            rattleCooldown = (int) ((60 + random.nextInt(140)) / Math.max(0.6f, ws));
-        }
-        if (ws > 0.7f && inside > 0.3f && WindPlace.wood != null && creakCooldown == 0 && random.nextFloat() < 0.02f) {
-            float v = (0.12f + 0.35f * Mth.clamp((ws - 0.7f) / 0.3f, 0f, 1f)) * inside * vol;
-            play(mc, CREAK, WindPlace.wood, v, 0.85f + 0.3f * random.nextFloat());
-            creakCooldown = 120 + random.nextInt(280);
-        }
-    }
-
-    private static void play(Minecraft mc, SoundEvent event, Vec3 at, float volume, float pitch) {
-        WeatherDirectorMod.LOG.debug("weather sounds: one-shot {} at {} volume {}", event.getLocation().getPath(), at, volume);
-        mc.getSoundManager().play(new SimpleSoundInstance(event.getLocation(), SoundSource.WEATHER, volume, pitch,
-                SoundInstance.createUnseededRandom(), false, 0, SoundInstance.Attenuation.LINEAR, at.x, at.y, at.z, false));
     }
 
     /** Slow random swells 0..1 for the breeze's gust gate (features ~8 s apart). */

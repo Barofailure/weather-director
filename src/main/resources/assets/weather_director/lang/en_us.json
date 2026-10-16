@@ -42,9 +42,5 @@
   "weather_director.configuration.muteAmbientSoundsWind.tooltip": "AmbientSounds' own wind ignores the weather; muting it means you hear one wind. Needs a restart.",
   "subtitles.weather_director.wind": "Wind blows",
   "weather_director.configuration.indoorWind": "Indoor wind",
-  "weather_director.configuration.indoorWind.tooltip": "The wind sounds different under a roof and indoors: duller, the house takes the gusts, a whistle at openings.",
-  "weather_director.configuration.rattles": "Rattling windows, creaking wood",
-  "weather_director.configuration.rattles.tooltip": "In strong wind, windows near you rattle and wood creaks.",
-  "subtitles.weather_director.rattle": "Window rattles",
-  "subtitles.weather_director.creak": "Wood creaks"
+  "weather_director.configuration.indoorWind.tooltip": "The wind sounds different under a roof and indoors: duller, the house takes the gusts, a whistle at openings."
 }
