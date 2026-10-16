@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- Fixed: a crash when the wind faded out (for example on entering the End) while the game had no working sound output.
+
 ## 1.2.0
 
 - The wind knows where you are. Every wind (breeze and strong wind, from a whisper to a storm) has three versions that

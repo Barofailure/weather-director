@@ -104,8 +104,8 @@ public final class WeatherSounds {
         if (mc.level.getGameTime() % 100 == 0) {
             WeatherDirectorMod.LOG.debug("weather sounds: wind {} | open {} sheltered {} indoor {} (roof {} sides {} outer walls {} sky {}) | breeze {}/{}/{} strong {}/{}/{} | rain level {} -> rain sound x{} | inner {} deep {} | rain place x{} thunder place x{}",
                     ws, place[0], place[1], place[2], WindPlace.roof, WindPlace.sides, WindPlace.exterior, WindPlace.sky,
-                    loops[0][0].getVolume(), loops[1][0].getVolume(), loops[2][0].getVolume(),
-                    loops[0][1].getVolume(), loops[1][1].getVolume(), loops[2][1].getVolume(),
+                    loops[0][0].level(), loops[1][0].level(), loops[2][0].level(),
+                    loops[0][1].level(), loops[1][1].level(), loops[2][1].level(),
                     mc.level.getRainLevel(1f), rainFactor(mc.level.getRainLevel(1f)), WindPlace.inner, WindPlace.deep,
                     placeScale(0.85f, 0.5f, 0.3f), placeScale(0.85f, 0.5f, 0.35f));
         }
@@ -167,7 +167,7 @@ public final class WeatherSounds {
     }
 
     private static void fadeOut() {
-        for (WindLoop[] row : loops) for (WindLoop l : row) if (l != null) l.target(0f, l.getPitch());
+        for (WindLoop[] row : loops) for (WindLoop l : row) if (l != null) l.fade();
     }
 
     public static void reset() {
@@ -260,6 +260,17 @@ public final class WeatherSounds {
         void end() {
             ending = true;
             targetVolume = 0f;
+        }
+
+        /** Fade to silence, pitch unchanged. Uses the raw fields: getPitch()/getVolume() read the resolved sound,
+         *  which is still null when the game never played the loop (no audio device, sound engine not loaded). */
+        void fade() {
+            targetVolume = 0f;
+            targetPitch = pitch;
+        }
+
+        float level() {
+            return volume;
         }
 
         @Override
