@@ -1,0 +1,7 @@
+{
+  "wind.light-wind": {"replace": true, "sounds": [{"name": "minecraft:intentionally_empty", "type": "event"}]},
+  "wind.light-wind2": {"replace": true, "sounds": [{"name": "minecraft:intentionally_empty", "type": "event"}]},
+  "wind.heavy-wind": {"replace": true, "sounds": [{"name": "minecraft:intentionally_empty", "type": "event"}]},
+  "wind.heavy-wind2": {"replace": true, "sounds": [{"name": "minecraft:intentionally_empty", "type": "event"}]},
+  "wind.howling-wind": {"replace": true, "sounds": [{"name": "minecraft:intentionally_empty", "type": "event"}]}
+}

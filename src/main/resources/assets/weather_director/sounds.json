@@ -1,8 +1,0 @@
-{
-  "wind.soft": {"sounds": [{"name": "weather_director:wind/soft", "stream": true}]},
-  "wind.strong": {"sounds": [{"name": "weather_director:wind/strong", "stream": true}]},
-  "wind.soft_sheltered": {"sounds": [{"name": "weather_director:wind/soft_sheltered", "stream": true}]},
-  "wind.strong_sheltered": {"sounds": [{"name": "weather_director:wind/strong_sheltered", "stream": true}]},
-  "wind.soft_indoor": {"sounds": [{"name": "weather_director:wind/soft_indoor", "stream": true}]},
-  "wind.strong_indoor": {"sounds": [{"name": "weather_director:wind/strong_indoor", "stream": true}]}
-}

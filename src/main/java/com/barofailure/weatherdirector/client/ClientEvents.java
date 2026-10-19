@@ -25,15 +25,15 @@ public final class ClientEvents {
     }
 
     /**
-     * AmbientSounds plays its own wind by height and open sky only, which would talk over the weather's wind. A built-in
-     * resource pack (always on, only when AmbientSounds is installed) sets that one AmbientSounds category to volume 0.
+     * The wind plays AmbientSounds' recordings. A built-in resource pack (always on, only when AmbientSounds is installed
+     * and the wind sound is on) defines our wind events on those files and empties AmbientSounds' own generic wind events,
+     * so the wind is heard once and follows the weather.
      */
     public static void addPacks(net.neoforged.neoforge.event.AddPackFindersEvent e) {
         if (e.getPackType() != net.minecraft.server.packs.PackType.CLIENT_RESOURCES || !Compat.on(Compat.AMBIENTSOUNDS)) return;
-        boolean mute = !ClientConfig.SPEC.isLoaded() || (ClientConfig.WIND_SOUND.get() && ClientConfig.MUTE_AMBIENTSOUNDS_WIND.get());
-        if (!mute) return;
+        if (ClientConfig.SPEC.isLoaded() && !ClientConfig.WIND_SOUND.get()) return;
         e.addPackFinders(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.barofailure.weatherdirector.WeatherDirectorMod.MOD_ID, "resourcepacks/ambientsounds_wind"),
-                net.minecraft.server.packs.PackType.CLIENT_RESOURCES, net.minecraft.network.chat.Component.literal("Weather Director: one wind"),
+                net.minecraft.server.packs.PackType.CLIENT_RESOURCES, net.minecraft.network.chat.Component.literal("Weather Director: wind"),
                 net.minecraft.server.packs.repository.PackSource.BUILT_IN, true, net.minecraft.server.packs.repository.Pack.Position.TOP);
     }
 

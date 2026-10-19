@@ -23,12 +23,11 @@ clouds first, rain only once they are thick. In winter it snows. Fog and mist co
 
 ## Sound
 
-- **Wind you can hear.** A soft breeze and a strong, gusty wind follow the same one wind as the clouds and the rain:
-  silent in calm air, a breeze that comes and goes, roaring in a thunderstorm, louder in the open and up high, muffled indoors, silent underwater.
-  The wind recordings are made for this mod and ship inside it.
-- **The wind knows where you are.** In the open you hear it full; under a roof with open sides it turns dull and the
-  roof drums; indoors the house takes the gusts (pressure on the walls, a whistle at openings).
-  Deep inside it is silent. Works on airships too.
+- **Wind you can hear.** Real recorded wind (AmbientSounds' recordings, so AmbientSounds is needed for it) follows the
+  same one wind as the clouds and the rain: silent in calm air, a breeze that comes and goes, roaring and howling in a
+  thunderstorm, louder in the open and up high. Two recordings per kind blend slowly, so no loop is heard repeating.
+- **The wind knows where you are.** In the open you hear it full; under a roof it is quieter and duller; indoors quiet
+  and muffled. In caves, sealed rooms, deep underground and underwater it is silent. Works on airships too.
 - **Rain sounds follow the rain.** Drizzle is soft, heavy rain is loud. This also applies to the rain and snow sounds of
   AmbientSounds and Particle Rain.
 - **Rain and thunder indoors.** Under a roof and indoors rain and thunder are quieter, thunder sounds deeper inside, and
@@ -42,7 +41,7 @@ clouds first, rain only once they are thick. In winter it snows. Fog and mist co
 | [Better Clouds](https://modrinth.com/mod/better-clouds) | cloud cover, grey storm clouds, shared drift, a cloud deck you can fly into |
 | [Particle Rain](https://modrinth.com/mod/particle-rain) | wind-blown rain and snow, light drizzle, soft ground fog |
 | [Distant Horizons](https://modrinth.com/mod/distanthorizons) | weather fog on the far terrain, no ring at the render distance |
-| [AmbientSounds](https://modrinth.com/mod/ambientsounds) | its rain follows the rain strength, its rain and storm get quieter indoors; its own wind (which ignores the weather) is muted so you hear one wind |
+| [AmbientSounds](https://modrinth.com/mod/ambientsounds) | its rain follows the rain strength, its rain and storm get quieter indoors; the wind plays its recordings (needed for the wind sound); its own generic wind is replaced so you hear one wind, its badlands wind and wind in the leaves follow the weather's wind |
 
 Without them the weather still changes for everyone, only plainer. Set Ecliptic Seasons `UseSolarWeather = false`
 so its own weather does not compete.

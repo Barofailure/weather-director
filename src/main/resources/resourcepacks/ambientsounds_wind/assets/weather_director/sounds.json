@@ -1,0 +1,7 @@
+{
+  "wind.breeze_a": {"sounds": [{"name": "ambientsounds:wind/light-wind", "stream": true}]},
+  "wind.breeze_b": {"sounds": [{"name": "ambientsounds:wind/light-wind2", "stream": true}]},
+  "wind.strong_a": {"sounds": [{"name": "ambientsounds:wind/heavy-wind", "stream": true}]},
+  "wind.strong_b": {"sounds": [{"name": "ambientsounds:wind/heavy-wind2", "stream": true}]},
+  "wind.howl": {"sounds": [{"name": "ambientsounds:wind/howling-wind", "stream": true}]}
+}

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0
+
+- The wind is now real recorded wind: AmbientSounds' recordings (two breezes, two strong winds and a storm howl),
+  played by the weather so they follow the one global wind, its gusts and the height. Each pair slowly blends from one
+  recording to the other, so no loop is heard repeating. Up on mountains it blows harder than in the valley.
+- Where you are still counts: full in the open, quieter and duller under a roof, quiet and muffled indoors (a real
+  low-pass filter), silent in caves, sealed rooms, deep underground and underwater.
+- AmbientSounds' own generic wind is replaced (heard once, never twice); its badlands wind and wind in the leaves stay
+  and follow the weather's wind too.
+- The wind sound needs AmbientSounds now; without it the weather is silent apart from rain and thunder. The
+  generated wind loops of 1.1.0 and 1.2.0 are gone, and with them the setting "Mute AmbientSounds' wind".
+
 ## 1.2.1
 
 - Fixed: a crash when the wind faded out (for example on entering the End) while the game had no working sound output.

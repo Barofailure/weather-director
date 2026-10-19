@@ -15,7 +15,10 @@
     "client.ParticleAccessor",
     "client.LevelRainMixin",
     "client.SingleQuadParticleAccessor",
-    "client.SoundEngineVolumeMixin"
+    "client.SoundEngineVolumeMixin",
+    "client.SoundManagerAccessor",
+    "client.SoundEngineAccessor",
+    "client.ChannelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
