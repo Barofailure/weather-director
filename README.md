@@ -68,8 +68,9 @@ so its own weather does not compete.
 
 - **Server:** `config/weather_director.json`: how long each weather lasts, what follows it, how it looks, season weights.
 - **Client:** Mods, Weather Director, Config (or `config/weather_director-client.toml`): clouds, grey skies,
-  seasonal skies, wind on rain, ground fog amount, particle budget, view fog, wind sound and its volume, rain sound
-  following the rain, muting AmbientSounds' wind. The wind plays on the game's Weather volume slider.
+  seasonal skies, wind on rain, ground fog amount, particle budget, view fog, wind sound and its volume, indoor wind,
+  rain sound following the rain, rain and thunder indoors, thunder after the flash. The wind plays on the game's Weather
+  volume slider.
 - Vanilla settings are respected: Particles scales the ground fog, a manual Clouds Off stays off,
   Hide Lightning Flashes works as usual.
 

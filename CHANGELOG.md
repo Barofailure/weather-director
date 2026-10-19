@@ -5,32 +5,19 @@
 - The wind is now real recorded wind: AmbientSounds' recordings (two breezes, two strong winds and a storm howl),
   played by the weather so they follow the one global wind, its gusts and the height. Each pair slowly blends from one
   recording to the other, so no loop is heard repeating. Up on mountains it blows harder than in the valley.
-- Where you are still counts: full in the open, quieter and duller under a roof, quiet and muffled indoors (a real
-  low-pass filter), silent in caves, sealed rooms, deep underground and underwater.
+- The wind knows where you are: full in the open, quieter and duller under a roof with open sides (porch, shed),
+  quiet and muffled indoors (a real low-pass filter), silent in caves of any size, sealed rooms, deep underground and
+  underwater, only a little at a cave mouth. Works on airships too.
 - AmbientSounds' own generic wind is replaced (heard once, never twice); its badlands wind and wind in the leaves stay
-  and follow the weather's wind too.
-- The wind sound needs AmbientSounds now; without it the weather is silent apart from rain and thunder. The
-  generated wind loops of 1.1.0 and 1.2.0 are gone, and with them the setting "Mute AmbientSounds' wind".
-
-## 1.2.1
-
-- Fixed: a crash when the wind faded out (for example on entering the End) while the game had no working sound output.
-
-## 1.2.0
-
-- The wind knows where you are. Every wind (breeze and strong wind, from a whisper to a storm) has three versions that
-  play in step and blend as you move: in the open; sheltered under a roof with open sides (porch, shed, forest
-  canopy, under a balloon): duller, the roof drums in the gusts; indoors: muffled pressure on the walls, a thump with
-  each strong gust and a thin whistle, coming from the nearest opening. Deep inside, underground or in a sealed room
-  it is silent. Works on airships too.
+  and follow the weather's wind too. The wind sound needs AmbientSounds; without it you hear rain and thunder only.
+  The generated wind loops of 1.1.0 are gone, and with them the setting "Mute AmbientSounds' wind".
 - Rain and thunder know where you are too. Under a roof the rain is a bit quieter, indoors about half as loud, in a cave
   or sealed room quieter again; thunder the same, and indoors it also sounds deeper. From about 10 blocks below the
   surface both fade out and are silent from about 30 blocks down.
 - Thunder comes after the flash: the further away the strike, the later you hear it (speed of sound).
 - Fixed: the rain sounds of the game itself (not only AmbientSounds) now really follow the rain strength.
-- No wind in caves, however big: the wind needs sky light; at a cave mouth only a little.
-- Fixed: above the clouds it now stops raining also while the cloud deck is still building or thinning out (light
-  rain used to keep falling above it then, however high you flew).
+- Fixed: above the clouds it now stops raining also while the cloud deck is still building or thinning out.
+- Fixed: a crash when the wind faded out (for example on entering the End) while the game had no working sound output.
 - New client settings: indoor wind, rain and thunder indoors, thunder after the flash.
 
 ## 1.1.0
