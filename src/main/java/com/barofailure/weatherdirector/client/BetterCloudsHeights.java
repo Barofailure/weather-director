@@ -1,11 +1,17 @@
 package com.barofailure.weatherdirector.client;
 
+import com.qendolin.betterclouds.BetterClouds;
 import com.qendolin.betterclouds.config.Config;
 import com.qendolin.betterclouds.config.ConfigManager;
 
 /** Better Clouds' deck heights for the current weather shape. Only loaded when Better Clouds is installed. */
 final class BetterCloudsHeights {
     private BetterCloudsHeights() {}
+
+    /** Better Clouds draws its clouds (it steps aside under a shader pack unless its Iris support is on). */
+    static boolean drawing() {
+        return BetterClouds.isEnabled();
+    }
 
     static float[] range(float base) {
         Config c = CloudShape.shape(ConfigManager.instance());

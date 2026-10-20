@@ -7,7 +7,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-/** Applies the Better Clouds / Particle Rain / Distant Horizons mixins only for installed, tested versions (Compat). */
+/** Applies the Better Clouds / Particle Rain / Distant Horizons / Iris mixins only for installed, tested versions (Compat). */
 public final class CompatMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
@@ -15,6 +15,7 @@ public final class CompatMixinPlugin implements IMixinConfigPlugin {
         if (simple.startsWith("BetterClouds")) return Compat.on(Compat.BETTER_CLOUDS);
         if (simple.startsWith("ParticleRain")) return Compat.on(Compat.PARTICLE_RAIN);
         if (simple.startsWith("DistantHorizons")) return Compat.on(Compat.DISTANT_HORIZONS);
+        if (simple.startsWith("Iris")) return Compat.on(Compat.IRIS);
         return true;
     }
 

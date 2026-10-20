@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Which optional mods we play the weather through. A mod counts only when it is installed AND its version is in the
  * range we tested (same major version). Outside that range its hooks stay off and the log says why, so an update of
- * Better Clouds, Particle Rain or Distant Horizons can never crash the game; the weather just looks plainer.
+ * Better Clouds, Particle Rain, Distant Horizons or Iris can never crash the game; the weather just looks plainer.
  * Also read by the compat mixin plugin, so it only uses the loading-time mod list and no game classes.
  */
 public final class Compat {
@@ -20,13 +20,16 @@ public final class Compat {
     public static final String PARTICLE_RAIN = "particlerain";
     public static final String DISTANT_HORIZONS = "distanthorizons";
     public static final String AMBIENTSOUNDS = "ambientsounds";
+    public static final String IRIS = "iris";
 
     /** modId -> {lowest tested version, first untested major}. */
     private static final Map<String, String[]> TESTED = Map.of(
             BETTER_CLOUDS, new String[] {"1.13.11", "2"},
             PARTICLE_RAIN, new String[] {"4.0.2", "5"},
             DISTANT_HORIZONS, new String[] {"3.3.0", "4"},
-            AMBIENTSOUNDS, new String[] {"6.3.0", "7"});
+            AMBIENTSOUNDS, new String[] {"6.3.0", "7"},
+            // Our shader uniforms hook into Iris internals, so only the tested minor version.
+            IRIS, new String[] {"1.8.14", "1.9"});
 
     private static final Logger LOG = LoggerFactory.getLogger("weather_director");
     private static final Map<String, Boolean> CACHE = new HashMap<>();

@@ -41,10 +41,27 @@ clouds first, rain only once they are thick. In winter it snows. Fog and mist co
 | [Better Clouds](https://modrinth.com/mod/better-clouds) | cloud cover, grey storm clouds, shared drift, a cloud deck you can fly into |
 | [Particle Rain](https://modrinth.com/mod/particle-rain) | wind-blown rain and snow, light drizzle, soft ground fog |
 | [Distant Horizons](https://modrinth.com/mod/distanthorizons) | weather fog on the far terrain, no ring at the render distance |
+| [Iris](https://modrinth.com/mod/iris) | shader packs can read the weather (see Shader packs below); under a shader pack that draws its own clouds there is no cloud deck of ours, so rain falls at every height |
 | [AmbientSounds](https://modrinth.com/mod/ambientsounds) | its rain follows the rain strength, its rain and storm get quieter indoors; the wind plays its recordings (needed for the wind sound); its own generic wind is replaced so you hear one wind, its badlands wind and wind in the leaves follow the weather's wind |
 
 Without them the weather still changes for everyone, only plainer. Set Ecliptic Seasons `UseSolarWeather = false`
 so its own weather does not compete.
+
+## Shader packs
+
+With Iris, every shader program gets these uniforms, so a shader pack can draw the same weather as Better Clouds does
+without shaders. Declare the ones you use (`uniform float wdCover;`); packs that do not declare them are not affected.
+
+| Uniform | Meaning |
+|---|---|
+| `float wdActive` | 1 while Weather Director drives the sky (overworld of a Weather Director server), else 0: fall back to your own weather then |
+| `float wdCover` | cloud cover, 0 clear .. 1 a closed deck (clear 0.05, fair 0.5, cloudy 0.66, overcast 0.9, rain 0.95, storms 1) |
+| `float wdGloom` | how grey sky, clouds and fog look, 0 .. 1, at least `rainStrength` (overcast 0.55, rain 0.7, storms 1) |
+| `float wdLightGloom` | how much daylight is dimmed, 0 .. 1 (overcast dims less than rain) |
+| `float wdFogEnd` | blocks at which weather fog (fog, thunderstorms) is opaque; 0 = no weather fog |
+| `vec2 wdCloudOffset` | how far the clouds have drifted with the wind, in blocks (x, z), wrapped every 36000 blocks |
+
+The client setting "shader weather" turns them off (all 0). The Iris hook only runs for tested Iris versions (1.8.x).
 
 ## Server and client
 
@@ -67,7 +84,7 @@ so its own weather does not compete.
 ## Settings
 
 - **Server:** `config/weather_director.json`: how long each weather lasts, what follows it, how it looks, season weights.
-- **Client:** Mods, Weather Director, Config (or `config/weather_director-client.toml`): clouds, grey skies,
+- **Client:** Mods, Weather Director, Config (or `config/weather_director-client.toml`): clouds, shader weather, grey skies,
   seasonal skies, wind on rain, ground fog amount, particle budget, view fog, wind sound and its volume, indoor wind,
   rain sound following the rain, rain and thunder indoors, thunder after the flash. The wind plays on the game's Weather
   volume slider.

@@ -126,6 +126,7 @@ dependencies {
     compileOnly "maven.modrinth:distanthorizons:${distanthorizons_version}"
     compileOnly "maven.modrinth:particle-rain:${particlerain_version}"
     compileOnly "maven.modrinth:better-clouds:${betterclouds_version}"
+    compileOnly "maven.modrinth:iris:${iris_version}"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

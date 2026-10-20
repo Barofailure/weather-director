@@ -9,6 +9,7 @@ import com.barofailure.weatherdirector.Compat;
  * Where the cloud deck is, so rain falls FROM it: above a thick deck there is no rain, no rain sound and no gloom
  * (sunshine over a sea of cloud), inside it you are in cloud fog. Heights follow Better Clouds' shape when it is
  * installed (base = dimension cloud height + yOffset, puffs from -0.3 * yRange to +yRange), else the vanilla layer.
+ * Under a shader pack that draws its own clouds there is no deck of ours: rain falls at every height, no cloud fog.
  */
 public final class CloudLayer {
     private static float above, aboveRain, inside;
@@ -40,7 +41,8 @@ public final class CloudLayer {
     static void tick() {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
-        if (level == null || !ClientWeather.active(level) || !mc.gameRenderer.getMainCamera().isInitialized() || !ClientConfig.CLOUD_LAYER.get()) {
+        if (level == null || !ClientWeather.active(level) || !mc.gameRenderer.getMainCamera().isInitialized() || !ClientConfig.CLOUD_LAYER.get()
+                || !ShaderWeather.ourCloudsDrawn()) {
             above += (0f - above) * 0.1f;
             aboveRain += (0f - aboveRain) * 0.1f;
             inside += (0f - inside) * 0.1f;

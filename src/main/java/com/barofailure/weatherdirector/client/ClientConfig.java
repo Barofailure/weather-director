@@ -16,6 +16,7 @@ public final class ClientConfig {
     public static final ModConfigSpec.BooleanValue CONTROL_CLOUDS;
     public static final ModConfigSpec.BooleanValue SHAPE_CLOUDS;
     public static final ModConfigSpec.BooleanValue KEEP_CLOUDS_ON;
+    public static final ModConfigSpec.BooleanValue SHADER_WEATHER;
     public static final ModConfigSpec.BooleanValue GREY_SKIES;
     public static final ModConfigSpec.BooleanValue SEASONAL_SKY;
     public static final ModConfigSpec.DoubleValue SEASONAL_SKY_STRENGTH;
@@ -43,6 +44,8 @@ public final class ClientConfig {
         SHAPE_CLOUDS = b.comment("Rain clouds sit lower and form a thicker deck.").define("shapeClouds", true);
         KEEP_CLOUDS_ON = b.comment("Distant Horizons switches the game's clouds off when it starts; turn them back on once per session. A manual 'Clouds: Off' is kept.")
                 .define("keepCloudsOn", true);
+        SHADER_WEATHER = b.comment("Shader packs (Iris) that read Weather Director's uniforms draw the same cloud cover, grey sky, fog and drift.",
+                        "Packs that do not read them are not affected.").define("shaderWeather", true);
         b.pop().push("sky");
         GREY_SKIES = b.comment("Overcast and rainy weather greys the sky and hides the sun and stars.").define("greySkies", true);
         SEASONAL_SKY = b.comment("Seasonal sky tint, sunrise/sunset colours and clearer winter stars.").define("seasonalSky", true);

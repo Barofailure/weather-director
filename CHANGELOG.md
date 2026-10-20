@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.0
+
+- Shader packs can show the weather: with Iris, Weather Director hands its cloud cover, grey sky, dimmed daylight,
+  weather fog and cloud drift to shader packs as uniforms (`wdCover`, `wdGloom`, ...; listed in the README). A pack
+  that reads them draws Clear, Cloudy, Overcast, Fog and storms like Better Clouds does without shaders. Packs that do
+  not read them are not affected. New client setting: shader weather.
+- Under a shader pack that draws its own clouds (Better Clouds steps aside then) there is no cloud deck of ours any
+  more: rain falls at every height and there is no cloud fog at Better Clouds' height where no clouds are drawn.
+
 ## 1.3.0
 
 - The wind is now real recorded wind: AmbientSounds' recordings (two breezes, two strong winds and a storm howl),
