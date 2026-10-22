@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+
+- Shader packs can draw mist and ground fog: two more uniforms, `wdGroundFog` and `wdMist` (0 .. 1). Without shaders
+  the ground fog is Particle Rain's fog particles; a shader pack can now lay the same fog over the ground itself, so
+  grass and terrain inside the fog are covered evenly instead of only where particles happen to be.
+
 ## 1.4.0
 
 - Shader packs can show the weather: with Iris, Weather Director hands its cloud cover, grey sky, dimmed daylight,

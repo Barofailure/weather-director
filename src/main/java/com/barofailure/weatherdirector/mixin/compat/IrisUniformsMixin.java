@@ -20,6 +20,8 @@ public abstract class IrisUniformsMixin {
                 .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdGloom", ShaderWeather::gloom)
                 .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdLightGloom", ShaderWeather::lightGloom)
                 .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdFogEnd", ShaderWeather::fogEnd)
+                .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdGroundFog", ShaderWeather::groundFog)
+                .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdMist", ShaderWeather::mist)
                 .uniform2f(UniformUpdateFrequency.PER_FRAME, "wdCloudOffset", ShaderWeather::cloudOffset);
     }
 }

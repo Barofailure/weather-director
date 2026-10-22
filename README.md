@@ -59,6 +59,8 @@ without shaders. Declare the ones you use (`uniform float wdCover;`); packs that
 | `float wdGloom` | how grey sky, clouds and fog look, 0 .. 1, at least `rainStrength` (overcast 0.55, rain 0.7, storms 1) |
 | `float wdLightGloom` | how much daylight is dimmed, 0 .. 1 (overcast dims less than rain) |
 | `float wdFogEnd` | blocks at which weather fog (fog, thunderstorms) is opaque; 0 = no weather fog |
+| `float wdGroundFog` | how much fog lies on the ground, 0 .. 1 (follows the ground fog setting; 0 above the clouds) |
+| `float wdMist` | how much mist lies on the ground, 0 .. 1 (light and white; must not shorten the view much) |
 | `vec2 wdCloudOffset` | how far the clouds have drifted with the wind, in blocks (x, z), wrapped every 36000 blocks |
 
 The client setting "shader weather" turns them off (all 0). The Iris hook only runs for tested Iris versions (1.8.x).

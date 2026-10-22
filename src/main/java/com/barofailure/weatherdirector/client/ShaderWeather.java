@@ -16,6 +16,8 @@ import org.joml.Vector2f;
  * <li>wdGloom: how grey sky, clouds and fog look, 0 .. 1 (at least rainStrength; overcast 0.55, storms 1)</li>
  * <li>wdLightGloom: how much the daylight is dimmed, 0 .. 1 (overcast dims less than rain)</li>
  * <li>wdFogEnd: blocks at which weather fog (fog, thunderstorms) is opaque, 0 = no weather fog</li>
+ * <li>wdGroundFog, wdMist: how much fog / mist lies on the ground, 0 .. 1 (the ground fog setting and amount included;
+ * 0 above the clouds). Without shaders this is Particle Rain's fog particles, which a pack can draw itself as low fog.</li>
  * <li>wdCloudOffset: how far the clouds have drifted with the wind, in blocks (x, z), wrapped every 36000 blocks</li>
  * </ul>
  */
@@ -54,6 +56,19 @@ public final class ShaderWeather {
 
     public static float fogEnd() {
         return level() != null && WeatherFog.active() ? WeatherFog.end() : 0f;
+    }
+
+    public static float groundFog() {
+        return level() != null ? ground(ClientWeather.fogLevel) : 0f;
+    }
+
+    public static float mist() {
+        return level() != null ? ground(ClientWeather.mistLevel) : 0f;
+    }
+
+    private static float ground(float level) {
+        if (!ClientConfig.GROUND_FOG.get()) return 0f;
+        return Mth.clamp(level * (1f - CloudLayer.above()) * ClientConfig.GROUND_FOG_AMOUNT.get().floatValue(), 0f, 1f);
     }
 
     public static Vector2f cloudOffset() {
