@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.2
+
+- A shader pack can draw Weather Director's cloud deck itself: two more uniforms, `wdCloudBottom` and `wdCloudTop`,
+  give its heights. For packs named in the new client setting "shader deck packs" the deck then works as it does
+  without shaders: rain falls from the clouds and stops above them, there is fog inside them and sunshine above.
+
 ## 1.4.1
 
 - Shader packs can draw mist and ground fog: two more uniforms, `wdGroundFog` and `wdMist` (0 .. 1). Without shaders

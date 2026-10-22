@@ -12,6 +12,8 @@
   "weather_director.configuration.keepCloudsOn": "Keep clouds on (Distant Horizons)",
   "weather_director.configuration.keepCloudsOn.tooltip": "Distant Horizons switches the game's clouds off when it starts; turn them back on once per session. A manual 'Clouds: Off' is kept.",
   "weather_director.configuration.shaderWeather": "Shader weather (Iris)",
+  "weather_director.configuration.shaderDeckPacks": "Shader packs that draw the cloud deck",
+  "weather_director.configuration.shaderDeckPacks.tooltip": "Shader packs (any part of their name) that draw Weather Director's cloud deck. Under them rain falls from the clouds, there is fog inside them and sunshine above, as without shaders.",
   "weather_director.configuration.shaderWeather.tooltip": "Shader packs that read Weather Director's uniforms draw the same cloud cover, grey sky, fog and drift. Packs that do not read them are not affected.",
   "weather_director.configuration.greySkies": "Grey skies",
   "weather_director.configuration.greySkies.tooltip": "Overcast and rainy weather greys the sky and hides the sun and stars.",

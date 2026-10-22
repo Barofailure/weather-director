@@ -17,6 +17,7 @@ public final class ClientConfig {
     public static final ModConfigSpec.BooleanValue SHAPE_CLOUDS;
     public static final ModConfigSpec.BooleanValue KEEP_CLOUDS_ON;
     public static final ModConfigSpec.BooleanValue SHADER_WEATHER;
+    public static final ModConfigSpec.ConfigValue<java.util.List<? extends String>> SHADER_DECK_PACKS;
     public static final ModConfigSpec.BooleanValue GREY_SKIES;
     public static final ModConfigSpec.BooleanValue SEASONAL_SKY;
     public static final ModConfigSpec.DoubleValue SEASONAL_SKY_STRENGTH;
@@ -46,6 +47,9 @@ public final class ClientConfig {
                 .define("keepCloudsOn", true);
         SHADER_WEATHER = b.comment("Shader packs (Iris) that read Weather Director's uniforms draw the same cloud cover, grey sky, fog and drift.",
                         "Packs that do not read them are not affected.").define("shaderWeather", true);
+        SHADER_DECK_PACKS = b.comment("Shader packs (any part of their name) that draw Weather Director's cloud deck at wdCloudBottom .. wdCloudTop.",
+                        "Under them the deck works as without shaders: rain falls from it, fog inside it, sunshine and no rain above it.")
+                .defineListAllowEmpty("shaderDeckPacks", java.util.List.of("Brasshaven"), () -> "", o -> o instanceof String);
         b.pop().push("sky");
         GREY_SKIES = b.comment("Overcast and rainy weather greys the sky and hides the sun and stars.").define("greySkies", true);
         SEASONAL_SKY = b.comment("Seasonal sky tint, sunrise/sunset colours and clearer winter stars.").define("seasonalSky", true);

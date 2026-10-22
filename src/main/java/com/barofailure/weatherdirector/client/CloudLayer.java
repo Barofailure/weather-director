@@ -9,7 +9,8 @@ import com.barofailure.weatherdirector.Compat;
  * Where the cloud deck is, so rain falls FROM it: above a thick deck there is no rain, no rain sound and no gloom
  * (sunshine over a sea of cloud), inside it you are in cloud fog. Heights follow Better Clouds' shape when it is
  * installed (base = dimension cloud height + yOffset, puffs from -0.3 * yRange to +yRange), else the vanilla layer.
- * Under a shader pack that draws its own clouds there is no deck of ours: rain falls at every height, no cloud fog.
+ * Under a shader pack that draws its own clouds there is no deck of ours (rain falls at every height, no cloud fog),
+ * unless the pack draws this deck itself (shaderDeckPacks; it gets the heights as wdCloudBottom / wdCloudTop).
  */
 public final class CloudLayer {
     private static float above, aboveRain, inside;
@@ -41,29 +42,31 @@ public final class CloudLayer {
     static void tick() {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
-        if (level == null || !ClientWeather.active(level) || !mc.gameRenderer.getMainCamera().isInitialized() || !ClientConfig.CLOUD_LAYER.get()
-                || !ShaderWeather.ourCloudsDrawn()) {
+        boolean on = level != null && ClientWeather.active(level) && mc.gameRenderer.getMainCamera().isInitialized();
+        float base = on ? level.effects().getCloudHeight() : Float.NaN;
+        if (on && Float.isNaN(base)) {
+            above = aboveRain = inside = 0f;
+            return;
+        }
+        // The deck's heights are kept up to date even while it is off: a shader pack that draws it reads them
+        if (on) {
+            float lo = base - 1f, hi = base + 5f;
+            if (Compat.on(Compat.BETTER_CLOUDS)) {
+                float[] r = BetterCloudsHeights.range(base);
+                lo = r[0];
+                hi = r[1];
+            }
+            // 2026-10-12: the whole cloud band (fog in, fog out, rain stop) a bit lower, ~5 blocks.
+            bottom = lo - BAND_SHIFT;
+            top = hi - BAND_SHIFT;
+        }
+        if (!on || !ClientConfig.CLOUD_LAYER.get() || !ShaderWeather.ourCloudsDrawn()) {
             above += (0f - above) * 0.1f;
             aboveRain += (0f - aboveRain) * 0.1f;
             inside += (0f - inside) * 0.1f;
             return;
         }
-        float base = level.effects().getCloudHeight();
-        if (Float.isNaN(base)) {
-            above = aboveRain = inside = 0f;
-            return;
-        }
-        float lo = base - 1f, hi = base + 5f;
-        if (Compat.on(Compat.BETTER_CLOUDS)) {
-            float[] r = BetterCloudsHeights.range(base);
-            lo = r[0];
-            hi = r[1];
-        }
-        // 2026-10-12: the whole cloud band (fog in, fog out, rain stop) a bit lower, ~5 blocks.
-        lo -= BAND_SHIFT;
-        hi -= BAND_SHIFT;
-        bottom = lo;
-        top = hi;
+        float lo = bottom, hi = top;
         double y = mc.gameRenderer.getMainCamera().getPosition().y;
         // Only a real deck clears the sky above it or wraps you in fog; scattered fair-weather clouds do not.
         float deck = Mth.clamp((ClientWeather.cover - 0.6f) / 0.3f, 0f, 1f);

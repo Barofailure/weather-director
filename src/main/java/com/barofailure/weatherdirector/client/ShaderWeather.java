@@ -19,6 +19,8 @@ import org.joml.Vector2f;
  * <li>wdGroundFog, wdMist: how much fog / mist lies on the ground, 0 .. 1 (the ground fog setting and amount included;
  * 0 above the clouds). Without shaders this is Particle Rain's fog particles, which a pack can draw itself as low fog.</li>
  * <li>wdCloudOffset: how far the clouds have drifted with the wind, in blocks (x, z), wrapped every 36000 blocks</li>
+ * <li>wdCloudBottom, wdCloudTop: the cloud deck's heights (blocks) for a pack listed in shaderDeckPacks that draws it;
+ * 0 for every other pack. Rain stops at its top, cloud fog inside it, as without shaders.</li>
  * </ul>
  */
 public final class ShaderWeather {
@@ -71,6 +73,23 @@ public final class ShaderWeather {
         return Mth.clamp(level * (1f - CloudLayer.above()) * ClientConfig.GROUND_FOG_AMOUNT.get().floatValue(), 0f, 1f);
     }
 
+    public static float cloudBottom() {
+        return level() != null && shaderDrawsDeck() ? CloudLayer.bottom() : 0f;
+    }
+
+    public static float cloudTop() {
+        return level() != null && shaderDrawsDeck() ? CloudLayer.top() : 0f;
+    }
+
+    /** The active shader pack draws our cloud deck itself (named in shaderDeckPacks). */
+    static boolean shaderDrawsDeck() {
+        if (!Compat.on(Compat.IRIS) || !IrisState.shadersOn()) return false;
+        String name = IrisState.packName().toLowerCase(java.util.Locale.ROOT);
+        for (String p : ClientConfig.SHADER_DECK_PACKS.get())
+            if (!p.isBlank() && name.contains(p.toLowerCase(java.util.Locale.ROOT))) return true;
+        return false;
+    }
+
     public static Vector2f cloudOffset() {
         if (active() <= 0f) return OFFSET.set(0f, 0f);
         float pt = partial();
@@ -82,11 +101,12 @@ public final class ShaderWeather {
     }
 
     /**
-     * False while a shader pack draws the sky and Better Clouds does not draw under it: the pack's clouds are where the
-     * pack puts them, so there is no deck of ours to fly into or to rain from (CloudLayer stays out of the way).
+     * False while a shader pack draws the sky, Better Clouds does not draw under it and the pack does not draw our deck
+     * (shaderDeckPacks): its clouds are where the pack puts them, so there is no deck of ours to fly into or to rain
+     * from (CloudLayer stays out of the way).
      */
     public static boolean ourCloudsDrawn() {
         if (!Compat.on(Compat.IRIS) || !IrisState.shadersOn()) return true;
-        return Compat.on(Compat.BETTER_CLOUDS) && BetterCloudsHeights.drawing();
+        return (Compat.on(Compat.BETTER_CLOUDS) && BetterCloudsHeights.drawing()) || shaderDrawsDeck();
     }
 }
