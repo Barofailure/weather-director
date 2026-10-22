@@ -66,6 +66,11 @@ without shaders. Declare the ones you use (`uniform float wdCover;`); packs that
 
 The client setting "shader weather" turns them off (all 0). The Iris hook only runs for tested Iris versions (1.8.x).
 
+A pack that draws Weather Director's cloud deck itself (at `wdCloudBottom` .. `wdCloudTop`) is named in the client
+setting "shader deck packs" (any part of the pack's file name; `Brasshaven` by default, the MakeUp edit of the Brasshaven
+modpack). Only for those packs the heights are set, and the deck then works as without shaders: rain falls from the
+clouds and stops above them, there is fog inside them and sunshine above.
+
 ## Server and client
 
 - **Server:** required. It runs the weather and sends it with the normal game packets.
@@ -87,7 +92,7 @@ The client setting "shader weather" turns them off (all 0). The Iris hook only r
 ## Settings
 
 - **Server:** `config/weather_director.json`: how long each weather lasts, what follows it, how it looks, season weights.
-- **Client:** Mods, Weather Director, Config (or `config/weather_director-client.toml`): clouds, shader weather, grey skies,
+- **Client:** Mods, Weather Director, Config (or `config/weather_director-client.toml`): clouds, shader weather, shader deck packs, grey skies,
   seasonal skies, wind on rain, ground fog amount, particle budget, view fog, wind sound and its volume, indoor wind,
   rain sound following the rain, rain and thunder indoors, thunder after the flash. The wind plays on the game's Weather
   volume slider.
