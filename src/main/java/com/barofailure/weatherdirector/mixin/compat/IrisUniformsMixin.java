@@ -22,6 +22,7 @@ public abstract class IrisUniformsMixin {
                 .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdFogEnd", ShaderWeather::fogEnd)
                 .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdGroundFog", ShaderWeather::groundFog)
                 .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdMist", ShaderWeather::mist)
+                .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdFogTop", ShaderWeather::fogTop)
                 .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdCloudBottom", ShaderWeather::cloudBottom)
                 .uniform1f(UniformUpdateFrequency.PER_FRAME, "wdCloudTop", ShaderWeather::cloudTop)
                 .uniform2f(UniformUpdateFrequency.PER_FRAME, "wdCloudOffset", ShaderWeather::cloudOffset);

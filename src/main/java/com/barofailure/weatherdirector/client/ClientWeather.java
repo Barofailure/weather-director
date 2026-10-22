@@ -120,6 +120,7 @@ public final class ClientWeather {
         mistLevel += Mth.clamp(mistTarget - mistLevel, -fogStep, fogStep);
         fogLevel += Mth.clamp(fogTarget - fogLevel, -fogStep, fogStep);
         CloudLayer.tick();
+        GroundLevel.tick();
         Minecraft mcDbg = Minecraft.getInstance();
         if (mcDbg.level != null && mcDbg.level.getGameTime() % 100 == 0) {
             WeatherDirectorMod.LOG.debug("client weather {}: fps {} particles {} | cover {} gloom {} haze {} mist {} fog {} | sky {} above {} inside {} | layer {}..{} cam y {}",

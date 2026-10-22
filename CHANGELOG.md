@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.3
+
+- Shader packs can lay mist and ground fog where it really is: a new uniform, `wdFogTop`, gives the top of the fog
+  layer on the ground around you (relative to your eyes). Seen from a hill or an airship the fog lies down on the land,
+  as Particle Rain's fog does without shaders, instead of covering everything below you.
+
 ## 1.4.2
 
 - A shader pack can draw Weather Director's cloud deck itself: two more uniforms, `wdCloudBottom` and `wdCloudTop`,

@@ -61,6 +61,7 @@ without shaders. Declare the ones you use (`uniform float wdCover;`); packs that
 | `float wdFogEnd` | blocks at which weather fog (fog, thunderstorms) is opaque; 0 = no weather fog |
 | `float wdGroundFog` | how much fog lies on the ground, 0 .. 1 (follows the ground fog setting; 0 above the clouds) |
 | `float wdMist` | how much mist lies on the ground, 0 .. 1 (light and white; must not shorten the view much) |
+| `float wdFogTop` | the top of the mist / ground fog layer in blocks above (+) or below (-) the eye; the layer lies on the ground around the player (about 4 blocks deep in mist, 9 in fog) |
 | `float wdCloudBottom`, `float wdCloudTop` | the cloud deck's heights in blocks, for a pack named in the client setting `shaderDeckPacks` that draws the deck there (0 for other packs); rain stops at its top, fog inside it |
 | `vec2 wdCloudOffset` | how far the clouds have drifted with the wind, in blocks (x, z), wrapped every 36000 blocks |
 

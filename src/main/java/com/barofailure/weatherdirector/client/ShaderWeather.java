@@ -19,6 +19,8 @@ import org.joml.Vector2f;
  * <li>wdGroundFog, wdMist: how much fog / mist lies on the ground, 0 .. 1 (the ground fog setting and amount included;
  * 0 above the clouds). Without shaders this is Particle Rain's fog particles, which a pack can draw itself as low fog.</li>
  * <li>wdCloudOffset: how far the clouds have drifted with the wind, in blocks (x, z), wrapped every 36000 blocks</li>
+ * <li>wdFogTop: the top of the mist / ground fog layer, in blocks above (+) or below (-) the eye; the layer lies on the
+ * ground around the player (GroundLevel), so seen from above the fog lies down there, as Particle Rain's does.</li>
  * <li>wdCloudBottom, wdCloudTop: the cloud deck's heights (blocks) for a pack listed in shaderDeckPacks that draws it;
  * 0 for every other pack. Rain stops at its top, cloud fog inside it, as without shaders.</li>
  * </ul>
@@ -71,6 +73,12 @@ public final class ShaderWeather {
     private static float ground(float level) {
         if (!ClientConfig.GROUND_FOG.get()) return 0f;
         return Mth.clamp(level * (1f - CloudLayer.above()) * ClientConfig.GROUND_FOG_AMOUNT.get().floatValue(), 0f, 1f);
+    }
+
+    public static float fogTop() {
+        if (level() == null) return 0f;
+        float top = GroundLevel.fogTop();
+        return Float.isNaN(top) ? 0f : top - (float) Minecraft.getInstance().gameRenderer.getMainCamera().getPosition().y;
     }
 
     public static float cloudBottom() {
